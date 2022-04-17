@@ -37,4 +37,13 @@ class Song {
 
   /// [dateAdded] The date the song was added to the site
   final String? dateAdded;
+
+  factory Song.empty() {
+    return const Song(
+      artist: '',
+      title: '',
+      image: '',
+      trackURL: '',
+    );
+  }
 }
