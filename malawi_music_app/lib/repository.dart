@@ -1,0 +1,3 @@
+class SongRepository {}
+
+class TrackRepository {}
