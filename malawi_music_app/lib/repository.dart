@@ -23,7 +23,8 @@ class SongRepository {
       final response = await client.get(url);
 
       if (response.statusCode != 200) {
-        throw Exception('Request failed with status code $response.statusCode');
+        throw Exception(
+            'Request failed with status code ${response.statusCode}');
       } else {
         Document $ = parse(response.toString());
         for (final element in $.querySelectorAll(kCardSelector).toList()) {
@@ -42,10 +43,60 @@ class SongRepository {
             artist: artist,
             title: title,
             image: image,
-            trackURL: trackURL ?? '',
+            track: trackURL ?? '',
           );
         }
       }
+    } finally {
+      client.close();
+    }
+  }
+
+  static Future<Song> getSong(String uri) async {
+    final client = http.Client();
+    const kTrackSelector = '.col-sm-6';
+
+    try {
+      Uri url = Uri.parse(uri);
+      http.Response response = await client.get(url);
+      if (response.statusCode != 200) {
+        throw Exception(
+          'Request failed with status code ${response.statusCode}',
+        );
+      }
+
+      Document $ = parse(response.toString());
+
+      final trackElement = $.querySelectorAll(kTrackSelector).last;
+      final streamURI = trackElement.querySelector('a')?.attributes['href'];
+
+      if (streamURI == null) {
+        return Song.empty();
+      }
+
+      url = Uri.parse(streamURI);
+      response = await client.get(url);
+
+      if (response.statusCode != 200) {
+        throw Exception(
+          'Request failed with status code ${response.statusCode}',
+        );
+      }
+
+      $ = parse(response.toString());
+      final artist = $.querySelector('h1 > a')?.text.trim() ?? '';
+      final title = $.querySelector('div > h1')?.text.trim() ?? '';
+      final image =
+          $.querySelector('.songpicture > img')?.attributes['src'] ?? '';
+      final stream = $.querySelector('audio > source')?.attributes['src'] ?? '';
+
+      return Song(
+        artist: artist,
+        title: title,
+        image: image,
+        track: '',
+        stream: stream,
+      );
     } finally {
       client.close();
     }
