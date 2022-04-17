@@ -46,4 +46,18 @@ class Song {
       track: '',
     );
   }
+
+  @override
+  String toString() {
+    return '''
+artist: $artist,
+title: $title,
+image: $image,
+track: $track,
+stream: $stream,
+genre: $genre,
+dateAdded: $dateAdded,
+size: $size,
+''';
+  }
 }
