@@ -7,8 +7,8 @@ class Song {
     required this.artist,
     required this.title,
     required this.image,
-    required this.trackURL,
-    this.streamURL,
+    required this.track,
+    this.stream,
     this.genre,
     this.dateAdded,
     this.size,
@@ -23,11 +23,11 @@ class Song {
   /// [image]  The url path to the thumbnail for the song
   final String image;
 
-  /// [trackURL] The url to the path to extract the songs url
-  final String trackURL;
+  /// [track] The url to the path to extract the songs url
+  final String track;
 
-  /// [streamURL] The url to the file path on the server
-  final String? streamURL;
+  /// [stream] The url to the file path on the server
+  final String? stream;
 
   /// [genre] The genre the song belongs to
   final String? genre;
@@ -43,7 +43,7 @@ class Song {
       artist: '',
       title: '',
       image: '',
-      trackURL: '',
+      track: '',
     );
   }
 }
