@@ -13,13 +13,14 @@ class SongRepository {
   /// the given [page] argument appended to it, and
   /// returns a promise that is eventually fulfilled
   /// to a list of song models.
+  static final _options = BaseOptions(
+    sendTimeout: 60000,
+    receiveTimeout: 60000,
+    connectTimeout: 60000,
+  );
+
   static Stream<Song> getSongs(int page) async* {
-    final options = BaseOptions(
-      sendTimeout: 60000,
-      receiveTimeout: 60000,
-      connectTimeout: 60000,
-    );
-    final dio = Dio(options);
+    final dio = Dio(_options);
 
     const kCardSelector = '.col-md-9 > .card-deck > .card';
     const kTitlesSelector = '.card-title';
@@ -64,7 +65,7 @@ class SongRepository {
   }
 
   static Future<Song> getSong(String uri) async {
-    final dio = Dio();
+    final dio = Dio(_options);
     const kTrackSelector = '.col-sm-6';
 
     try {
