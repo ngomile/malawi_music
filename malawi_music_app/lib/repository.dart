@@ -6,13 +6,20 @@ import 'package:malawi_music_app/models.dart';
 import './constants.dart';
 import './models.dart';
 
+///[SongRepository] handles extraction of data from
+///documents to product [Song] models
 class SongRepository {
   /// Performs a get request to the base url path with
   /// the given [page] argument appended to it, and
   /// returns a promise that is eventually fulfilled
   /// to a list of song models.
   static Stream<Song> getSongs(int page) async* {
-    final dio = Dio();
+    final options = BaseOptions(
+      sendTimeout: 60000,
+      receiveTimeout: 60000,
+      connectTimeout: 60000,
+    );
+    final dio = Dio(options);
 
     const kCardSelector = '.col-md-9 > .card-deck > .card';
     const kTitlesSelector = '.card-title';
