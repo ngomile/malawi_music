@@ -64,9 +64,12 @@ class SongRepository {
     }
   }
 
-  static Future<Song> getSong(String uri) async {
+  static Future<Song> getSong({
+    required String track,
+    required String uri,
+  }) async {
     final dio = Dio(_options);
-    const kTrackSelector = '.col-sm-6';
+    const kTrackSelector = '.col-sm-6 span > a';
 
     try {
       String url = uri;
@@ -83,8 +86,10 @@ class SongRepository {
 
       Document $ = parse(response.data);
 
-      final trackElement = $.querySelectorAll(kTrackSelector).last;
-      final streamURI = trackElement.querySelector('a')?.attributes['href'];
+      final trackElement = $.querySelectorAll(kTrackSelector).firstWhere(
+            (element) => element.text.contains(track),
+          );
+      final streamURI = trackElement.attributes['href'];
 
       if (streamURI == null) {
         return Song.empty();
