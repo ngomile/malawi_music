@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:malawi_music_app/models.dart';
 
 void main() {
   runApp(const App());
@@ -45,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           SizedBox(height: 25),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(left: 12.0),
             child: Text(
               'Latest',
               style: TextStyle(
@@ -54,8 +57,26 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          // ignore: avoid_unnecessary_containers
+          LatestSongScroller(),
         ],
       ),
     );
+  }
+}
+
+class LatestSongScroller extends StatefulWidget {
+  const LatestSongScroller({Key? key}) : super(key: key);
+
+  @override
+  State<LatestSongScroller> createState() => _LatestSongScrollerState();
+}
+
+class _LatestSongScrollerState extends State<LatestSongScroller> {
+  final StreamController<List<Song>> _streamController = StreamController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
