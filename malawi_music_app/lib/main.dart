@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
+import 'package:malawi_music_app/repository.dart';
 
 void main() {
   runApp(const App());
@@ -43,40 +44,67 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(height: 25),
-          Padding(
-            padding: EdgeInsets.only(left: 12.0),
-            child: Text(
-              'Latest',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 12.0),
+              child: Text(
+                'Latest',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          ),
-          // ignore: avoid_unnecessary_containers
-          LatestSongScroller(),
-        ],
+            // ignore: avoid_unnecessary_containers
+            LatestSongsList(),
+          ],
+        ),
       ),
     );
   }
 }
 
-class LatestSongScroller extends StatefulWidget {
-  const LatestSongScroller({Key? key}) : super(key: key);
+class LatestSongsList extends StatefulWidget {
+  const LatestSongsList({Key? key}) : super(key: key);
 
   @override
-  State<LatestSongScroller> createState() => _LatestSongScrollerState();
+  State<LatestSongsList> createState() => _LatestSongsListState();
 }
 
-class _LatestSongScrollerState extends State<LatestSongScroller> {
-  final StreamController<List<Song>> _streamController = StreamController();
+class _LatestSongsListState extends State<LatestSongsList> {
+  StreamController<Song>? _streamController;
+  final List<Song> songs = [];
+  int _page = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamController ??= StreamController.broadcast();
+
+    _streamController?.stream.listen((song) => setState(() => songs.add(song)));
+    fetchPhotos();
+  }
+
+  @override
+  void dispose() {
+    _streamController?.close();
+    _streamController = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+
+  void fetchPhotos() async {
+    final songs = await SongRepository.getSongs(_page).toList();
+    for (final song in songs) {
+      _streamController?.sink.add(song);
+    }
+    _page++;
   }
 }
