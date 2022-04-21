@@ -97,7 +97,31 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 2,
+        ),
+      ),
+      child: StreamBuilder<Song>(
+        builder: (BuildContext context, AsyncSnapshot<Song> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: songs.length,
+            itemBuilder: (BuildContext context, int item) {
+              final song = songs.elementAt(item);
+              return ListTile();
+            },
+          );
+        },
+      ),
+    );
   }
 
   void fetchPhotos() async {
