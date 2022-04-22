@@ -46,7 +46,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: LatestSongHeader(),
+        child: Column(
+          children: const [
+            LatestSongHeader(),
+          ],
+        ),
       ),
     );
   }
@@ -59,27 +63,30 @@ class LatestSongHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: const [
-        SizedBox(height: 12.0),
-        Text(
-          'Latest',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
+    return Container(
+      margin: const EdgeInsets.only(top: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: const [
+          Text(
+            'Latest',
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(height: 4.0),
-        Text(
-          'Browse the latest music',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
+          SizedBox(height: 4.0),
+          Text(
+            'Browse the latest music',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
