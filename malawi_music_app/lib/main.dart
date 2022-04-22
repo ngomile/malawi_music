@@ -120,6 +120,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
     _streamController?.stream.listen(
       (song) => setState(() => _songs.add(song)),
     );
+    fetchSongs();
   }
 
   @override
@@ -165,5 +166,13 @@ class _LatestSongsListState extends State<LatestSongsList> {
         ),
       ),
     );
+  }
+
+  void fetchSongs() async {
+    final songs = List<Song>.generate(100, (index) => Song.empty());
+    for (final song in songs) {
+      _streamController?.sink.add(song);
+      await Future.delayed(Duration.zero);
+    }
   }
 }
