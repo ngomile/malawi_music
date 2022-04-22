@@ -108,6 +108,27 @@ class LatestSongsList extends StatefulWidget {
 }
 
 class _LatestSongsListState extends State<LatestSongsList> {
+  StreamController<Song>? _streamController;
+  final List<Song> _songs = [];
+  int _page = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamController ??= StreamController.broadcast();
+
+    _streamController?.stream.listen(
+      (song) => setState(() => _songs.add(song)),
+    );
+  }
+
+  @override
+  void dispose() {
+    _streamController?.close();
+    _streamController = null;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
