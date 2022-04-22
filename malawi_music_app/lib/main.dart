@@ -47,8 +47,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: const [
             LatestSongHeader(),
+            LatestSongsList(),
           ],
         ),
       ),
@@ -88,5 +91,19 @@ class LatestSongHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class LatestSongsList extends StatefulWidget {
+  const LatestSongsList({Key? key}) : super(key: key);
+
+  @override
+  State<LatestSongsList> createState() => _LatestSongsListState();
+}
+
+class _LatestSongsListState extends State<LatestSongsList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
