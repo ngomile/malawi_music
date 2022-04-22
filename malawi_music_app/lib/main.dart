@@ -148,7 +148,21 @@ class _LatestSongsListState extends State<LatestSongsList> {
           ),
         ),
         margin: const EdgeInsets.only(top: 12.0),
-        child: Text('Placeholder'),
+        child: StreamBuilder<Song>(
+          stream: _streamController?.stream,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView.builder(
+              itemCount: _songs.length,
+              itemBuilder: (context, index) => Text('$index'),
+            );
+          },
+        ),
       ),
     );
   }
