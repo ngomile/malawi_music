@@ -64,7 +64,7 @@ class SongRepository {
   }
 
   static Future<Song> getSong({
-    required String track,
+    required String title,
     required String uri,
   }) async {
     final dio = Dio(_options);
@@ -86,7 +86,7 @@ class SongRepository {
       Document $ = parse(response.data);
 
       final trackElement = $.querySelectorAll(kTrackSelector).firstWhere(
-            (element) => element.text.contains(track),
+            (element) => element.text.contains(title),
           );
       final streamURI = trackElement.attributes['href'];
 
@@ -109,7 +109,7 @@ class SongRepository {
 
       $ = parse(response.data);
       final artist = $.querySelector('h1 > a')?.text.trim() ?? '';
-      final title =
+      title =
           $.querySelector('div > h1')?.text.trim().split('-').last.trim() ?? '';
       final image =
           $.querySelector('.songpicture > img')?.attributes['src'] ?? '';
