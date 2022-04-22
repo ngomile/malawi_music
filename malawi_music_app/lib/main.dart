@@ -85,11 +85,12 @@ class LatestSongHeader extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 4.0),
+          SizedBox(height: 8.0),
           Text(
-            'Browse the latest music',
+            'Explore the latest music',
             style: TextStyle(
               fontSize: 22,
+              fontWeight: FontWeight.w600,
               color: Colors.grey,
             ),
           ),
