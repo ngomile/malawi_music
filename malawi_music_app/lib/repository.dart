@@ -14,9 +14,8 @@ class SongRepository {
   /// returns a promise that is eventually fulfilled
   /// to a list of song models.
   static final _options = BaseOptions(
-    sendTimeout: 60000,
-    receiveTimeout: 60000,
-    connectTimeout: 60000,
+    receiveTimeout: 20 * 1000,
+    connectTimeout: 20 * 1000,
   );
 
   static Stream<Song> getSongs(int page) async* {
