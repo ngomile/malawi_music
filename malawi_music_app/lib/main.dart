@@ -27,6 +27,7 @@ class App extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
       ),
       home: const HomePage(),
     );
@@ -46,89 +47,23 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(left: 12.0),
-              child: Text(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.only(left: 12.0),
+              child: const Text(
                 'Latest',
                 style: TextStyle(
                   fontSize: 32,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            // ignore: avoid_unnecessary_containers
-            LatestSongsList(),
+            )
           ],
         ),
       ),
     );
-  }
-}
-
-class LatestSongsList extends StatefulWidget {
-  const LatestSongsList({Key? key}) : super(key: key);
-
-  @override
-  State<LatestSongsList> createState() => _LatestSongsListState();
-}
-
-class _LatestSongsListState extends State<LatestSongsList> {
-  StreamController<Song>? _streamController;
-  final List<Song> songs = [];
-  int _page = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _streamController ??= StreamController.broadcast();
-
-    _streamController?.stream.listen((song) => setState(() => songs.add(song)));
-    fetchPhotos();
-  }
-
-  @override
-  void dispose() {
-    _streamController?.close();
-    _streamController = null;
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-          width: 2,
-        ),
-      ),
-      child: StreamBuilder<Song>(
-        builder: (BuildContext context, AsyncSnapshot<Song> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          return ListView.builder(
-            itemCount: songs.length,
-            itemBuilder: (BuildContext context, int item) {
-              final song = songs.elementAt(item);
-              return ListTile();
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  void fetchPhotos() async {
-    final songs = await SongRepository.getSongs(_page).toList();
-    for (final song in songs) {
-      _streamController?.sink.add(song);
-    }
-    _page++;
   }
 }
