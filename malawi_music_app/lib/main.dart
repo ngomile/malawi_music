@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
+        scaffoldBackgroundColor: Colors.black,
       ),
       home: const HomePage(),
     );
@@ -46,13 +46,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: const [
-            LatestSongHeader(),
-            LatestSongsList(),
-          ],
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            color: Color(0xFFF8F8F8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: const [
+              LatestSongHeader(),
+              Flexible(child: LatestSongsList()),
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +89,7 @@ class LatestSongHeader extends StatelessWidget {
           Text(
             'Browse the latest music',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 22,
               color: Colors.grey,
             ),
           ),
@@ -104,6 +109,25 @@ class LatestSongsList extends StatefulWidget {
 class _LatestSongsListState extends State<LatestSongsList> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: screenHeight,
+      ),
+      child: Container(
+        width: screenWidth,
+        decoration: const BoxDecoration(
+          color: Color(0xFF0F0F0F),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12.0),
+            topRight: Radius.circular(12.0),
+          ),
+        ),
+        margin: const EdgeInsets.only(top: 12.0),
+        child: Text('Placeholder'),
+      ),
+    );
   }
 }
