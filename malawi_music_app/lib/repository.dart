@@ -54,7 +54,7 @@ class SongRepository {
         yield Song(
           artist: artist,
           title: title,
-          image: image,
+          image: '$kBaseURL$image',
           track: trackURL ?? '',
         );
       }
@@ -118,7 +118,7 @@ class SongRepository {
       return Song(
         artist: artist,
         title: title,
-        image: image,
+        image: '$kBaseURL$image',
         track: '',
         stream: stream,
       );
