@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:malawi_music_app/constants.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/repository.dart';
 
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.max,
             children: const [
               LatestSongHeader(),
-              Flexible(child: LatestSongsList()),
+              Expanded(child: LatestSongsList()),
             ],
           ),
         ),
@@ -141,11 +143,15 @@ class _LatestSongsListState extends State<LatestSongsList> {
       ),
       child: Container(
         width: screenWidth,
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 12.0,
+        ),
         decoration: const BoxDecoration(
           color: Color(0xFF0F0F0F),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12.0),
-            topRight: Radius.circular(12.0),
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
           ),
         ),
         margin: const EdgeInsets.only(top: 12.0),
@@ -160,7 +166,25 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
             return ListView.builder(
               itemCount: _songs.length,
-              itemBuilder: (context, index) => Text('$index'),
+              itemBuilder: (context, index) {
+                final song = _songs.elementAt(index);
+
+                return Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.grey,
+                  ),
+                  height: screenHeight * .10,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 4.0,
+                  ),
+                  margin: const EdgeInsets.only(bottom: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                  ),
+                );
+              },
             );
           },
         ),
@@ -169,7 +193,20 @@ class _LatestSongsListState extends State<LatestSongsList> {
   }
 
   void fetchSongs() async {
-    final songs = List<Song>.generate(100, (index) => Song.empty());
+    await Future.delayed(const Duration(milliseconds: 5 * 1000));
+    final songs = List<Song>.generate(
+      10,
+      (index) => const Song(
+        artist: 'Rob G',
+        title: 'Fake Love',
+        image:
+            '$kBaseURL/timthumb.php?src=http://www.malawi-music.com/images/albums/fake love art.jpeg&w=500&h=510&q=100&zc=1',
+        track: 'https://www.malawi-music.com/R/1881-rob-g/12195-fake-love/',
+        stream: null,
+        genre: null,
+      ),
+    );
+
     for (final song in songs) {
       _streamController?.sink.add(song);
       await Future.delayed(Duration.zero);
