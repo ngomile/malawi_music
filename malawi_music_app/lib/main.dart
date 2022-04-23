@@ -193,6 +193,36 @@ class _LatestSongsListState extends State<LatestSongsList> {
                           ),
                         ),
                         width: 80,
+                        margin: const EdgeInsets.only(right: 12.0),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                song.title,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(height: 4.0),
+                              Text(
+                                song.artist,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFF0F0F0),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
