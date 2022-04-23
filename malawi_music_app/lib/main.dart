@@ -145,7 +145,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
         width: screenWidth,
         padding: const EdgeInsets.symmetric(
           vertical: 16.0,
-          horizontal: 12.0,
+          horizontal: 8.0,
         ),
         decoration: const BoxDecoration(
           color: Color(0xFF0F0F0F),
@@ -171,17 +171,30 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
                 return Container(
                   decoration: const BoxDecoration(
-                    color: Colors.grey,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(2.0),
+                        bottomLeft: Radius.circular(2.0)),
+                    // color: Colors.grey,
                   ),
                   height: screenHeight * .10,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 4.0,
-                  ),
-                  margin: const EdgeInsets.only(bottom: 8.0),
+                  margin: const EdgeInsets.only(bottom: 16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                              song.image,
+                            ),
+                          ),
+                        ),
+                        width: 80,
+                      ),
+                    ],
                   ),
                 );
               },
