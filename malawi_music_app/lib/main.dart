@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:malawi_music_app/constants.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/repository.dart';
 
@@ -215,6 +214,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                               Text(
                                 song.artist,
                                 style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
                                   fontSize: 18,
                                   color: Color(0xFFF0F0F0),
                                   fontWeight: FontWeight.w500,
@@ -235,24 +235,16 @@ class _LatestSongsListState extends State<LatestSongsList> {
     );
   }
 
+  ///[fetchSongs] handles retrieval of songs from the page
+  ///and feeds the data back into [_streamController] until
+  ///done and increments the page count.
   void fetchSongs() async {
-    await Future.delayed(const Duration(milliseconds: 5 * 1000));
-    final songs = List<Song>.generate(
-      10,
-      (index) => const Song(
-        artist: 'Rob G',
-        title: 'Fake Love',
-        image:
-            '$kBaseURL/timthumb.php?src=http://www.malawi-music.com/images/albums/fake love art.jpeg&w=500&h=510&q=100&zc=1',
-        track: 'https://www.malawi-music.com/R/1881-rob-g/12195-fake-love/',
-        stream: null,
-        genre: null,
-      ),
-    );
+    final songs = await SongRepository.getSongs(_page).toList();
 
     for (final song in songs) {
       _streamController?.sink.add(song);
       await Future.delayed(Duration.zero);
     }
+    _page++;
   }
 }
