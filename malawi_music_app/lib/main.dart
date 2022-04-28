@@ -242,7 +242,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                               style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 18,
-                                color: Color(0xFFF0F0F0),
+                                color: Color(0xFFA6A6A6),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -357,8 +357,9 @@ class _PlayPageState extends State<PlayPage> {
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w900,
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 15),
                         Text(
