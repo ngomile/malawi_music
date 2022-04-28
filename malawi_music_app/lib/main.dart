@@ -288,15 +288,40 @@ class PlayPage extends StatefulWidget {
 class _PlayPageState extends State<PlayPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: DefaultTextStyle(
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xFFF8F8F8),
         ),
-        child: Center(
-          child: Text('Play Page'),
-        ),
+        child: FutureBuilder<Song>(
+            future: fetchSong(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text('Failed to load song'),
+                );
+              }
+
+              final song = snapshot.data;
+
+              return Center(
+                child: Text('${song?.artist} - ${song?.title}'),
+              );
+            }),
       ),
     );
+  }
+
+  Future<Song> fetchSong() async {
+    final song = await SongRepository.getSong(widget.title, widget.uri);
+    return song;
   }
 }
