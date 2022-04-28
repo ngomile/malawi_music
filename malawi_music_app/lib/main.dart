@@ -310,7 +310,7 @@ class _PlayPageState extends State<PlayPage> {
               }
 
               final song = snapshot.data;
-              final image = song?.image as String;
+              if (song != null) {}
 
               return Stack(
                 children: [
@@ -340,11 +340,38 @@ class _PlayPageState extends State<PlayPage> {
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(image),
+                          image: CachedNetworkImageProvider(song?.image ?? ''),
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  Positioned(
+                    top: screenHeight * .56,
+                    left: (screenWidth * .10) / 2,
+                    right: (screenWidth * .10) / 2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          song?.title ?? '',
+                          style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w900,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Text(
+                          song?.artist ?? '',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFA6A6A6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
             }),
