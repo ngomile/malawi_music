@@ -263,3 +263,23 @@ class _LatestSongsListState extends State<LatestSongsList> {
     _page++;
   }
 }
+
+class PlayPage extends StatefulWidget {
+  const PlayPage({required this.track, required this.uri, Key? key})
+      : super(key: key);
+
+  final String track;
+  final String uri;
+
+  @override
+  State<PlayPage> createState() => _PlayPageState();
+}
+
+class _PlayPageState extends State<PlayPage> {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Play Page'),
+    );
+  }
+}
