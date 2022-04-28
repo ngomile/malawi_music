@@ -63,10 +63,10 @@ class SongRepository {
     }
   }
 
-  static Future<Song> getSong({
-    required String title,
-    required String uri,
-  }) async {
+  static Future<Song> getSong(
+    String title,
+    String uri,
+  ) async {
     final dio = Dio(_options);
     const kTrackSelector = '.col-sm-6 span > a';
 
