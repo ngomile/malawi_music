@@ -40,11 +40,11 @@ class App extends StatelessWidget {
         }
 
         if (pathElements[1] == 'play') {
-          final args = settings.arguments as Map<String, String>;
-          final params = PlayParams.fromMap(args);
+          final params = settings.arguments as PlayParams;
 
           return MaterialPageRoute(
-            builder: (context) => PlayPage(track: params.track, uri: params.uri);
+            builder: (context) =>
+                PlayPage(track: params.track, uri: params.uri),
           );
         }
 
