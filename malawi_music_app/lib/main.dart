@@ -310,6 +310,7 @@ class _PlayPageState extends State<PlayPage> {
               }
 
               final song = snapshot.data;
+              final image = song?.image as String;
 
               return Stack(
                 children: [
@@ -329,6 +330,21 @@ class _PlayPageState extends State<PlayPage> {
                       elevation: 0,
                     ),
                   ),
+                  Positioned(
+                    top: screenHeight * .12,
+                    left: (screenWidth - 375) / 2,
+                    right: (screenWidth - 375) / 2,
+                    height: screenHeight * .40,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(image),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               );
             }),
