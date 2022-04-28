@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
+import 'package:malawi_music_app/params.dart';
 import 'package:malawi_music_app/repository.dart';
 
 void main() {
@@ -31,6 +32,24 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
       ),
       home: const HomePage(),
+      onGenerateRoute: (settings) {
+        final pathElements = settings.name?.split('/');
+
+        if (pathElements == null) {
+          return null;
+        }
+
+        if (pathElements[1] == 'play') {
+          final args = settings.arguments as Map<String, String>;
+          final params = PlayParams.fromMap(args);
+
+          return MaterialPageRoute(
+            builder: (context) => PlayPage(track: params.track, uri: params.uri);
+          );
+        }
+
+        return null;
+      },
     );
   }
 }
