@@ -44,7 +44,7 @@ class App extends StatelessWidget {
 
           return MaterialPageRoute(
             builder: (context) =>
-                PlayPage(track: params.track, uri: params.uri),
+                PlayPage(title: params.title, uri: params.uri),
           );
         }
 
@@ -218,12 +218,22 @@ class _LatestSongsListState extends State<LatestSongsList> {
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              song.title,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis,
+                            GestureDetector(
+                              onTapUp: (_) => Navigator.pushNamed(
+                                context,
+                                '/play',
+                                arguments: PlayParams(
+                                  title: song.title,
+                                  uri: song.track,
+                                ),
+                              ),
+                              child: Text(
+                                song.title,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 4.0),
@@ -265,10 +275,10 @@ class _LatestSongsListState extends State<LatestSongsList> {
 }
 
 class PlayPage extends StatefulWidget {
-  const PlayPage({required this.track, required this.uri, Key? key})
+  const PlayPage({required this.title, required this.uri, Key? key})
       : super(key: key);
 
-  final String track;
+  final String title;
   final String uri;
 
   @override
@@ -278,8 +288,15 @@ class PlayPage extends StatefulWidget {
 class _PlayPageState extends State<PlayPage> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Play Page'),
+    return const Scaffold(
+      body: DefaultTextStyle(
+        style: TextStyle(
+          color: Color(0xFFF8F8F8),
+        ),
+        child: Center(
+          child: Text('Play Page'),
+        ),
+      ),
     );
   }
 }
