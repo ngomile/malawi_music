@@ -288,11 +288,10 @@ class PlayPage extends StatefulWidget {
 class _PlayPageState extends State<PlayPage> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-      ),
       body: DefaultTextStyle(
         style: const TextStyle(
           color: Color(0xFFF8F8F8),
@@ -312,8 +311,25 @@ class _PlayPageState extends State<PlayPage> {
 
               final song = snapshot.data;
 
-              return Center(
-                child: Text('${song?.artist} - ${song?.title}'),
+              return Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: AppBar(
+                      leading: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.chevron_left,
+                          size: 36,
+                        ),
+                      ),
+                      backgroundColor: Colors.black,
+                      elevation: 0,
+                    ),
+                  ),
+                ],
               );
             }),
       ),
