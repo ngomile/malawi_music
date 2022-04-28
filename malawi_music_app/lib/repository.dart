@@ -118,7 +118,7 @@ class SongRepository {
       return Song(
         artist: artist,
         title: title,
-        image: '$kBaseURL$image',
+        image: image,
         track: '',
         stream: stream,
       );
