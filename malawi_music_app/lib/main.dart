@@ -133,104 +133,100 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final orientation = MediaQuery.of(context).orientation;
 
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: screenHeight,
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 8.0,
       ),
-      child: Container(
-        width: screenWidth,
-        padding: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 8.0,
+      decoration: const BoxDecoration(
+        color: Color(0xFF0F0F0F),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
         ),
-        decoration: const BoxDecoration(
-          color: Color(0xFF0F0F0F),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-          ),
-        ),
-        margin: const EdgeInsets.only(top: 12.0),
-        child: StreamBuilder<Song>(
-          stream: _streamController?.stream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            return ListView.builder(
-              itemCount: _songs.length,
-              itemBuilder: (context, index) {
-                final song = _songs.elementAt(index);
-
-                return Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(2.0),
-                        bottomLeft: Radius.circular(2.0)),
-                    // color: Colors.grey,
-                  ),
-                  height: screenHeight * .10,
-                  margin: const EdgeInsets.only(bottom: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              song.image,
-                            ),
-                          ),
-                        ),
-                        width: 80,
-                        margin: const EdgeInsets.only(right: 12.0),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                song.title,
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w700,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                song.artist,
-                                style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  fontSize: 18,
-                                  color: Color(0xFFF0F0F0),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+      ),
+      margin: const EdgeInsets.only(top: 12.0),
+      child: StreamBuilder<Song>(
+        stream: _streamController?.stream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          },
-        ),
+          }
+
+          return ListView.builder(
+            itemCount: _songs.length,
+            itemBuilder: (context, index) {
+              final song = _songs.elementAt(index);
+
+              return Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(2.0),
+                      bottomLeft: Radius.circular(2.0)),
+                  // color: Colors.grey,
+                ),
+                height: orientation == Orientation.portrait
+                    ? screenHeight * .10
+                    : screenHeight * .15,
+                margin: const EdgeInsets.only(bottom: 16.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2.0),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            song.image,
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      margin: const EdgeInsets.only(right: 12.0),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              song.title,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              song.artist,
+                              style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 18,
+                                color: Color(0xFFF0F0F0),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
