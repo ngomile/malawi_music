@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/params.dart';
 import 'package:malawi_music_app/repository.dart';
+import 'package:malawi_music_app/utils.dart';
 
 void main() {
   runApp(const App());
@@ -200,9 +200,10 @@ class _LatestSongsListState extends State<LatestSongsList> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.0),
+                        color: const Color(0xFF333436),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
+                          image: getCachedImage(
                             song.image,
                           ),
                         ),
@@ -340,7 +341,7 @@ class _PlayPageState extends State<PlayPage> {
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(song?.image ?? ''),
+                          image: getCachedImage(song?.image ?? ''),
                         ),
                       ),
                     ),
