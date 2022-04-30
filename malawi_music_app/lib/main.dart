@@ -342,16 +342,21 @@ class _PlayPageState extends State<PlayPage> {
                     left: (screenWidth - 375) / 2,
                     right: (screenWidth - 375) / 2,
                     height: screenHeight * .40,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            song?.image ?? '',
+                    child: CachedNetworkImage(
+                      imageUrl: song?.image ?? '',
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                   Positioned(
