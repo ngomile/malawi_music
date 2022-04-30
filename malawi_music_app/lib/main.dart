@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/params.dart';
 import 'package:malawi_music_app/repository.dart';
-import 'package:malawi_music_app/utils.dart';
 
 void main() {
   runApp(const App());
@@ -153,6 +153,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final orientation = MediaQuery.of(context).orientation;
 
     return Container(
@@ -197,19 +198,24 @@ class _LatestSongsListState extends State<LatestSongsList> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2.0),
-                        color: const Color(0xFF333436),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: getCachedImage(
-                            song.image,
+                    CachedNetworkImage(
+                      imageUrl: song.image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0),
+                          color: const Color(0xFF333436),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
                         ),
+                        width: screenWidth * .15,
+                        margin: const EdgeInsets.only(right: 12.0),
                       ),
-                      width: 80,
-                      margin: const EdgeInsets.only(right: 12.0),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                     Expanded(
                       child: Padding(
@@ -341,7 +347,9 @@ class _PlayPageState extends State<PlayPage> {
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: getCachedImage(song?.image ?? ''),
+                          image: CachedNetworkImageProvider(
+                            song?.image ?? '',
+                          ),
                         ),
                       ),
                     ),
