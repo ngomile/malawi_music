@@ -35,17 +35,15 @@ class App extends StatelessWidget {
       onGenerateRoute: (settings) {
         final pathElements = settings.name?.split('/');
 
-        if (pathElements == null) {
-          return null;
-        }
+        if (pathElements != null) {
+          if (pathElements[1] == 'play') {
+            final params = settings.arguments as PlayParams;
 
-        if (pathElements[1] == 'play') {
-          final params = settings.arguments as PlayParams;
-
-          return MaterialPageRoute(
-            builder: (context) =>
-                PlayPage(title: params.title, uri: params.uri),
-          );
+            return MaterialPageRoute(
+              builder: (context) =>
+                  PlayPage(title: params.title, uri: params.uri),
+            );
+          }
         }
 
         return null;
@@ -317,7 +315,6 @@ class _PlayPageState extends State<PlayPage> {
               }
 
               final song = snapshot.data;
-              if (song != null) {}
 
               return Stack(
                 children: [
