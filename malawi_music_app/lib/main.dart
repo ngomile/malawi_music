@@ -153,6 +153,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final orientation = MediaQuery.of(context).orientation;
+    final thumbnailWidth = screenWidth * .20;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -208,22 +209,19 @@ class _LatestSongsListState extends State<LatestSongsList> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        width: screenWidth * .15,
+                        width: thumbnailWidth,
                         margin: const EdgeInsets.only(right: 12.0),
                       ),
                       placeholder: (context, url) => Container(
-                        width: screenWidth * .15,
+                        width: thumbnailWidth,
                         margin: const EdgeInsets.only(right: 12.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(2.0),
                           color: const Color(0xFF333436),
                         ),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
                       ),
                       errorWidget: (context, url, error) => Container(
-                        width: screenWidth * .15,
+                        width: thumbnailWidth,
                         margin: const EdgeInsets.only(right: 12.0),
                         child: const Center(
                           child: Icon(
@@ -373,9 +371,6 @@ class _PlayPageState extends State<PlayPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           color: const Color(0xFF333436),
-                        ),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
                         ),
                       ),
                       errorWidget: (context, url, error) => Container(
