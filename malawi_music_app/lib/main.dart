@@ -222,7 +222,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                       ),
                       errorWidget: (context, url, error) => Container(
                         width: thumbnailWidth,
-                        margin: const EdgeInsets.only(right: 12.0),
+                        margin: const EdgeInsets.only(right: 16.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(2.0),
                           color: const Color(0xFF333436),
