@@ -312,6 +312,11 @@ class PlayPage extends StatefulWidget {
 
 class _PlayPageState extends State<PlayPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -430,14 +435,14 @@ class _PlayPageState extends State<PlayPage> {
   }
 }
 
-class AudioPlayer extends StatefulWidget {
-  const AudioPlayer({Key? key}) : super(key: key);
+class TrackPlayer extends StatefulWidget {
+  const TrackPlayer({Key? key}) : super(key: key);
 
   @override
-  State<AudioPlayer> createState() => _AudioPlayerState();
+  State<TrackPlayer> createState() => _TrackPlayerState();
 }
 
-class _AudioPlayerState extends State<AudioPlayer> {
+class _TrackPlayerState extends State<TrackPlayer> {
   @override
   Widget build(BuildContext context) {
     return Container();
