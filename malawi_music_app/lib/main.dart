@@ -153,7 +153,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final orientation = MediaQuery.of(context).orientation;
-    final thumbnailWidth = screenWidth * .20;
+    final thumbnailWidth = screenWidth * .22;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -206,7 +206,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                           color: const Color(0xFF333436),
                           image: DecorationImage(
                             image: imageProvider,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                         width: thumbnailWidth,
