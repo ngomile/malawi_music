@@ -196,6 +196,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    //TODO: Extract image handling logic to separate widget
                     CachedNetworkImage(
                       imageUrl: song.image,
                       imageBuilder: (context, imageProvider) => Container(
@@ -210,10 +211,27 @@ class _LatestSongsListState extends State<LatestSongsList> {
                         width: screenWidth * .15,
                         margin: const EdgeInsets.only(right: 12.0),
                       ),
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => Container(
+                        width: screenWidth * .15,
+                        margin: const EdgeInsets.only(right: 12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0),
+                          color: const Color(0xFF333436),
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        width: screenWidth * .15,
+                        margin: const EdgeInsets.only(right: 12.0),
+                        child: const Center(
+                          child: Icon(
+                            Icons.error,
+                            size: 32,
+                          ),
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Padding(
