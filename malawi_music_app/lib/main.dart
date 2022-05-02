@@ -361,17 +361,33 @@ class _PlayPageState extends State<PlayPage> {
                       imageUrl: song?.image ?? '',
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: const Color(0xFF333436),
                           image: DecorationImage(
                             image: imageProvider,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: const Color(0xFF333436),
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: const Color(0xFF333436),
+                        ),
+                        child: const Icon(
+                          Icons.error,
+                          size: 36.0,
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
