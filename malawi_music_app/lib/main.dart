@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
@@ -311,9 +312,12 @@ class PlayPage extends StatefulWidget {
 }
 
 class _PlayPageState extends State<PlayPage> {
+  late AudioPlayer _audioPlayer;
+
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();
   }
 
   @override
@@ -419,6 +423,7 @@ class _PlayPageState extends State<PlayPage> {
                             color: Color(0xFFA6A6A6),
                           ),
                         ),
+                        TrackPlayer(audioPlayer: _audioPlayer),
                       ],
                     ),
                   ),
@@ -436,7 +441,9 @@ class _PlayPageState extends State<PlayPage> {
 }
 
 class TrackPlayer extends StatefulWidget {
-  const TrackPlayer({Key? key}) : super(key: key);
+  const TrackPlayer({required this.audioPlayer, Key? key}) : super(key: key);
+
+  final AudioPlayer audioPlayer;
 
   @override
   State<TrackPlayer> createState() => _TrackPlayerState();
