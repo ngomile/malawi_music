@@ -485,14 +485,8 @@ class _TrackPlayerState extends State<TrackPlayer> {
   }
 
   void _playHandler() {
-    setState(() {
-      if (!_isPlaying) {
-        _player.play(widget.uri);
-        _isPlaying = true;
-      } else {
-        _player.pause();
-        _isPlaying = false;
-      }
-    });
+    _isPlaying = !_isPlaying;
+    _isPlaying ? _player.pause() : _player.play(widget.uri);
+    setState(() {});
   }
 }
