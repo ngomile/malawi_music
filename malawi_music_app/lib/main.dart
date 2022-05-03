@@ -443,7 +443,7 @@ class TrackPlayer extends StatefulWidget {
 }
 
 class _TrackPlayerState extends State<TrackPlayer> {
-  late AudioPlayer _advancedPlayer = AudioPlayer();
+  late final AudioPlayer _player = AudioPlayer();
 
   Duration _duration = Duration();
   Duration _position = Duration();
@@ -459,21 +459,40 @@ class _TrackPlayerState extends State<TrackPlayer> {
   void initState() {
     super.initState();
 
-    _advancedPlayer.onDurationChanged.listen(
-      (duration) => setState(() {
-        _duration = duration;
-      }),
-    );
+    _player.onDurationChanged.listen((duration) => setState(() {
+          _duration = duration;
+        }));
 
-    _advancedPlayer.onAudioPositionChanged.listen((duration) => setState(() {
+    _player.onAudioPositionChanged.listen((duration) => setState(() {
           _position = duration;
         }));
 
-    _advancedPlayer.setUrl(widget.uri);
+    _player.setUrl(widget.uri);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        IconButton(
+          onPressed: _playHandler,
+          icon: _isPlaying ? Icon(_icons[0]) : Icon(_icons[1]),
+        ),
+      ],
+    );
+  }
+
+  void _playHandler() {
+    setState(() {
+      if (!_isPlaying) {
+        _player.play(widget.uri);
+        _isPlaying = true;
+      } else {
+        _player.pause();
+        _isPlaying = false;
+      }
+    });
   }
 }
