@@ -480,6 +480,14 @@ class _TrackPlayerState extends State<TrackPlayer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Slider(
+          activeColor: const Color(0xFFF8F8F8),
+          inactiveColor: Colors.grey,
+          value: _position.inSeconds.toDouble(),
+          min: 0.0,
+          max: _duration.inSeconds.toDouble(),
+          onChanged: _seekHandler,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Row(
@@ -521,6 +529,12 @@ class _TrackPlayerState extends State<TrackPlayer> {
   void _playHandler() {
     _isPlaying = !_isPlaying;
     _isPlaying ? _player.pause() : _player.play(widget.uri);
+    setState(() {});
+  }
+
+  void _seekHandler(double val) {
+    final duration = Duration(seconds: val.toInt());
+    _player.seek(duration);
     setState(() {});
   }
 
