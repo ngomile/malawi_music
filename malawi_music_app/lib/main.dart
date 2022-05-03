@@ -502,7 +502,15 @@ class _TrackPlayerState extends State<TrackPlayer> {
           children: [
             IconButton(
               onPressed: _playHandler,
-              icon: _isPlaying ? Icon(_icons[0]) : Icon(_icons[1]),
+              icon: _isPlaying
+                  ? Icon(
+                      _icons[0],
+                      size: 50.0,
+                    )
+                  : Icon(
+                      _icons[1],
+                      size: 50.0,
+                    ),
             ),
           ],
         ),
