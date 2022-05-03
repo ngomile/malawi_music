@@ -415,11 +415,15 @@ class _PlayPageState extends State<PlayPage> {
                           color: Color(0xFFA6A6A6),
                         ),
                       ),
-                      const Spacer(),
-                      TrackPlayer(uri: song.stream as String),
                     ],
                   ),
                 ),
+                Positioned(
+                  top: screenHeight * .80,
+                  left: (screenWidth * .02) / 2,
+                  right: (screenWidth * .02) / 2,
+                  child: TrackPlayer(uri: song.stream as String),
+                )
               ],
             );
           },
@@ -510,8 +514,9 @@ class _TrackPlayerState extends State<TrackPlayer> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
+              color: const Color(0xFFF8F8F8),
               onPressed: _playHandler,
-              icon: _isPlaying
+              icon: !_isPlaying
                   ? Icon(
                       _icons[0],
                       size: 50.0,
