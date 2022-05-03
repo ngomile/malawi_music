@@ -415,6 +415,7 @@ class _PlayPageState extends State<PlayPage> {
                           color: Color(0xFFA6A6A6),
                         ),
                       ),
+                      const Spacer(),
                       TrackPlayer(uri: song.stream as String),
                     ],
                   ),
