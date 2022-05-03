@@ -485,10 +485,14 @@ class _TrackPlayerState extends State<TrackPlayer> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_position.toString(),
-                  style: const TextStyle(fontSize: 16.0)),
-              Text(_duration.toString(),
-                  style: const TextStyle(fontSize: 16.0)),
+              Text(
+                _parseDurationTime(_position),
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                _parseDurationTime(_duration),
+                style: const TextStyle(fontSize: 16.0),
+              ),
             ],
           ),
         ),
@@ -510,5 +514,12 @@ class _TrackPlayerState extends State<TrackPlayer> {
     _isPlaying = !_isPlaying;
     _isPlaying ? _player.pause() : _player.play(widget.uri);
     setState(() {});
+  }
+
+  String _parseDurationTime(Duration d) {
+    String parsedTime = d.toString();
+    List<String> splitParts = parsedTime.split('.')[0].split(':');
+    parsedTime = '${splitParts[1]}:${splitParts[2]}';
+    return parsedTime;
   }
 }
