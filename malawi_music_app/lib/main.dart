@@ -445,8 +445,8 @@ class TrackPlayer extends StatefulWidget {
 class _TrackPlayerState extends State<TrackPlayer> {
   late final AudioPlayer _player = AudioPlayer();
 
-  Duration _duration = Duration();
-  Duration _position = Duration();
+  Duration _duration = const Duration();
+  Duration _position = const Duration();
 
   bool _isPlaying = false;
 
@@ -478,13 +478,29 @@ class _TrackPlayerState extends State<TrackPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        IconButton(
-          onPressed: _playHandler,
-          icon: _isPlaying ? Icon(_icons[0]) : Icon(_icons[1]),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(_position.toString(),
+                  style: const TextStyle(fontSize: 16.0)),
+              Text(_duration.toString(),
+                  style: const TextStyle(fontSize: 16.0)),
+            ],
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: _playHandler,
+              icon: _isPlaying ? Icon(_icons[0]) : Icon(_icons[1]),
+            ),
+          ],
         ),
       ],
     );
