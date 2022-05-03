@@ -312,14 +312,6 @@ class PlayPage extends StatefulWidget {
 }
 
 class _PlayPageState extends State<PlayPage> {
-  late AudioPlayer _audioPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = AudioPlayer();
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -343,7 +335,7 @@ class _PlayPageState extends State<PlayPage> {
                 );
               }
 
-              final song = snapshot.data;
+              final song = snapshot.data as Song;
 
               return Stack(
                 children: [
@@ -369,7 +361,7 @@ class _PlayPageState extends State<PlayPage> {
                     right: (screenWidth - 375) / 2,
                     height: screenHeight * .40,
                     child: CachedNetworkImage(
-                      imageUrl: song?.image ?? '',
+                      imageUrl: song.image,
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
@@ -406,7 +398,7 @@ class _PlayPageState extends State<PlayPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          song?.title ?? '',
+                          song.title,
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w900,
@@ -416,14 +408,14 @@ class _PlayPageState extends State<PlayPage> {
                         ),
                         const SizedBox(height: 15),
                         Text(
-                          song?.artist ?? '',
+                          song.artist,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFFA6A6A6),
                           ),
                         ),
-                        TrackPlayer(audioPlayer: _audioPlayer),
+                        TrackPlayer(uri: song.stream as String),
                       ],
                     ),
                   ),
@@ -441,9 +433,9 @@ class _PlayPageState extends State<PlayPage> {
 }
 
 class TrackPlayer extends StatefulWidget {
-  const TrackPlayer({required this.audioPlayer, Key? key}) : super(key: key);
+  const TrackPlayer({required this.uri, Key? key}) : super(key: key);
 
-  final AudioPlayer audioPlayer;
+  final String uri;
 
   @override
   State<TrackPlayer> createState() => _TrackPlayerState();
