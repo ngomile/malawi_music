@@ -16,21 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: DefaultTextStyle(
-          style: const TextStyle(
-            color: Color(0xFFF8F8F8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: const [
-              LatestSongHeader(),
-              Expanded(child: LatestSongsList()),
-            ],
-          ),
-        ),
+    return MainContent(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: const [
+          LatestSongHeader(),
+          Expanded(child: LatestSongsList()),
+        ],
       ),
     );
   }
