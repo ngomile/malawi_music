@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 /// [MainContent] is a helper widget that places its children within commonly
@@ -49,5 +50,119 @@ class _PaginatedBuilderState extends State<PaginatedBuilder> {
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+}
+
+class TrackPlayer extends StatefulWidget {
+  const TrackPlayer({required this.uri, Key? key}) : super(key: key);
+
+  final String uri;
+
+  @override
+  State<TrackPlayer> createState() => _TrackPlayerState();
+}
+
+class _TrackPlayerState extends State<TrackPlayer> {
+  late final AudioPlayer _player = AudioPlayer();
+
+  Duration _duration = const Duration();
+  Duration _position = const Duration();
+
+  bool _isPlaying = false;
+
+  final List<IconData> _icons = [
+    Icons.play_circle_filled,
+    Icons.pause_circle_filled,
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _player.onDurationChanged.listen((duration) => setState(() {
+          _duration = duration;
+        }));
+
+    _player.onAudioPositionChanged.listen((duration) => setState(() {
+          _position = duration;
+        }));
+
+    _player.setUrl(widget.uri);
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Slider(
+          activeColor: const Color(0xFFF8F8F8),
+          inactiveColor: Colors.grey,
+          value: _position.inSeconds.toDouble(),
+          min: 0.0,
+          max: _duration.inSeconds.toDouble(),
+          onChanged: _seekHandler,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _parseDurationTime(_position),
+                style: const TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                _parseDurationTime(_duration),
+                style: const TextStyle(fontSize: 16.0),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              color: const Color(0xFFF8F8F8),
+              onPressed: _playHandler,
+              icon: !_isPlaying
+                  ? Icon(
+                      _icons[0],
+                      size: 50.0,
+                    )
+                  : Icon(
+                      _icons[1],
+                      size: 50.0,
+                    ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _playHandler() {
+    _isPlaying = !_isPlaying;
+    _isPlaying ? _player.pause() : _player.play(widget.uri);
+    setState(() {});
+  }
+
+  void _seekHandler(double val) {
+    final duration = Duration(seconds: val.toInt());
+    _player.seek(duration);
+    setState(() {});
+  }
+
+  String _parseDurationTime(Duration d) {
+    String parsedTime = d.toString();
+    List<String> splitParts = parsedTime.split('.')[0].split(':');
+    parsedTime = '${splitParts[1]}:${splitParts[2]}';
+    return parsedTime;
   }
 }
