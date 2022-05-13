@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/models.dart';
-import 'package:malawi_music_app/params.dart';
+import 'package:malawi_music_app/args.dart';
 import 'package:malawi_music_app/repository.dart';
 
 void main() {
