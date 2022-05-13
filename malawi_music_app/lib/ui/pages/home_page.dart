@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/args.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/repository.dart';
+import 'package:malawi_music_app/ui/ui.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -105,9 +105,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     final orientation = MediaQuery.of(context).orientation;
-    final thumbnailWidth = screenWidth * .22;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -146,46 +144,19 @@ class _LatestSongsListState extends State<LatestSongsList> {
                 height: orientation == Orientation.portrait
                     ? screenHeight * .10
                     : screenHeight * .15,
-                margin: const EdgeInsets.only(bottom: 16.0),
+                margin: const EdgeInsets.only(bottom: 24.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    //TODO: Extract image handling logic to separate widget
-                    CachedNetworkImage(
-                      imageUrl: song.image,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0),
-                          color: const Color(0xFF333436),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        width: thumbnailWidth,
-                        margin: const EdgeInsets.only(right: 12.0),
-                      ),
-                      placeholder: (context, url) => Container(
-                        width: thumbnailWidth,
-                        margin: const EdgeInsets.only(right: 12.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0),
-                          color: const Color(0xFF333436),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        width: thumbnailWidth,
-                        margin: const EdgeInsets.only(right: 16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0),
-                          color: const Color(0xFF333436),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.error,
-                            size: 32,
-                          ),
+                    Container(
+                      width: 96.0,
+                      margin: const EdgeInsets.only(right: 16.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: CachedImage(
+                          song.image,
+                          aspectRatio: 4 / 3,
                         ),
                       ),
                     ),
