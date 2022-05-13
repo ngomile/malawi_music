@@ -1,5 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:malawi_music_app/colors.dart';
 
 /// [MainContent] is a helper widget that places its children within commonly
 /// used widgets like [SafeArea] and provides the default text color to child
@@ -167,16 +169,73 @@ class _TrackPlayerState extends State<TrackPlayer> {
   }
 }
 
+/// [CachedImage] wraps [CachedNetworkImage] avoiding further calls to it once
+/// the imageProvider has been retrieved.
 class CachedImage extends StatefulWidget {
-  const CachedImage({Key? key}) : super(key: key);
+  const CachedImage(
+    this.url, {
+    this.fit = BoxFit.fill,
+    this.aspectRatio = 16 / 9,
+    Key? key,
+  }) : super(key: key);
+
+  final String url;
+  final BoxFit fit;
+  final double aspectRatio;
 
   @override
   State<CachedImage> createState() => _CachedImageState();
 }
 
 class _CachedImageState extends State<CachedImage> {
+  Widget? image;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if (image != null) return image!;
+
+    return CachedNetworkImage(
+      imageUrl: widget.url,
+      imageBuilder: (context, imageProvider) {
+        image = AspectRatio(
+          aspectRatio: widget.aspectRatio,
+          child: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              color: kImageBGColor,
+              image: DecorationImage(
+                image: imageProvider,
+                fit: widget.fit,
+              ),
+            ),
+          ),
+        );
+        return image!;
+      },
+      placeholder: (context, url) => AspectRatio(
+        aspectRatio: widget.aspectRatio,
+        child: Container(
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+            color: kImageBGColor,
+          ),
+        ),
+      ),
+      errorWidget: (context, url, error) => AspectRatio(
+        aspectRatio: widget.aspectRatio,
+        child: Container(
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+            color: kImageBGColor,
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.error,
+              size: 32,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
