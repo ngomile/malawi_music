@@ -38,7 +38,7 @@ class App extends StatelessWidget {
 
         if (pathElements != null) {
           if (pathElements[1] == 'play') {
-            final params = settings.arguments as PlayParams;
+            final params = settings.arguments as PlayArgs;
 
             return MaterialPageRoute(
               builder: (context) =>
@@ -248,7 +248,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                               onTapUp: (_) => Navigator.pushNamed(
                                 context,
                                 '/play',
-                                arguments: PlayParams(
+                                arguments: PlayArgs(
                                   title: song.title,
                                   uri: song.track,
                                 ),
