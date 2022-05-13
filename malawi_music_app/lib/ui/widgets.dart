@@ -166,3 +166,17 @@ class _TrackPlayerState extends State<TrackPlayer> {
     return parsedTime;
   }
 }
+
+class CachedImage extends StatefulWidget {
+  const CachedImage({Key? key}) : super(key: key);
+
+  @override
+  State<CachedImage> createState() => _CachedImageState();
+}
+
+class _CachedImageState extends State<CachedImage> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
