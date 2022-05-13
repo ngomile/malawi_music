@@ -36,18 +36,18 @@ class App extends StatelessWidget {
       onGenerateRoute: (settings) {
         final pathElements = settings.name?.split('/');
 
-        if (pathElements != null) {
-          if (pathElements[1] == 'play') {
-            final params = settings.arguments as PlayArgs;
-
+        switch (pathElements?.elementAt(1)) {
+          case 'play':
+            final args = settings.arguments as PlayArgs;
             return MaterialPageRoute(
-              builder: (context) =>
-                  PlayPage(title: params.title, uri: params.uri),
+              builder: (context) => PlayPage(
+                title: args.title,
+                uri: args.uri,
+              ),
             );
-          }
+          default:
+            return MaterialPageRoute(builder: (context) => const HomePage());
         }
-
-        return null;
       },
     );
   }
