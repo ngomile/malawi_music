@@ -23,7 +23,7 @@ class MainContent extends StatelessWidget {
       body: SafeArea(
         child: DefaultTextStyle(
           style: const TextStyle(
-            color: kLightFontColor,
+            color: kPrimaryLightColor,
           ),
           child: Container(
             constraints: const BoxConstraints.expand(),
