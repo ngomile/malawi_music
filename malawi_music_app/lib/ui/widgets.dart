@@ -7,19 +7,28 @@ import 'package:malawi_music_app/colors.dart';
 /// used widgets like [SafeArea] and provides the default text color to child
 /// widgets
 class MainContent extends StatelessWidget {
-  const MainContent({required this.child, Key? key}) : super(key: key);
+  const MainContent({
+    required this.child,
+    this.appBar,
+    Key? key,
+  }) : super(key: key);
 
+  final PreferredSizeWidget? appBar;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar,
       body: SafeArea(
         child: DefaultTextStyle(
           style: const TextStyle(
             color: kLightFontColor,
           ),
-          child: child,
+          child: Container(
+            constraints: const BoxConstraints.expand(),
+            child: child,
+          ),
         ),
       ),
     );
