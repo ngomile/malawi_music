@@ -59,7 +59,7 @@ class SectionContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           _heading,
-          child,
+          Expanded(child: child),
         ],
       ),
     );
