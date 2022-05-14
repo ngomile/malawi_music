@@ -24,7 +24,7 @@ class LatestPage extends StatelessWidget {
           ),
         ),
       ),
-      child: const LatestSongsList(),
+      child: const LatestSongsList(paginate: true),
     );
   }
 }

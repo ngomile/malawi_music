@@ -6,7 +6,9 @@ import 'package:malawi_music_app/repository.dart';
 import 'package:malawi_music_app/ui/ui.dart';
 
 class LatestSongsList extends StatefulWidget {
-  const LatestSongsList({Key? key}) : super(key: key);
+  const LatestSongsList({this.paginate = false, Key? key}) : super(key: key);
+
+  final bool paginate;
 
   @override
   State<LatestSongsList> createState() => _LatestSongsListState();
@@ -14,6 +16,8 @@ class LatestSongsList extends StatefulWidget {
 
 class _LatestSongsListState extends State<LatestSongsList> {
   StreamController<Song>? _streamController;
+  ScrollController? _scrollController;
+
   final List<Song> _songs = [];
   int _page = 1;
 
@@ -24,13 +28,21 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
     _streamController?.stream
         .listen((data) => setState(() => _songs.add(data)));
+
+    _scrollController = ScrollController()..addListener(onScrollEnd);
+
     fetchSongs();
   }
 
   @override
   void dispose() {
     _streamController?.close();
+    _scrollController?.removeListener(onScrollEnd);
+    _scrollController?.dispose();
+
     _streamController = null;
+    _scrollController = null;
+
     super.dispose();
   }
 
@@ -66,6 +78,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
     }
 
     return ListView.builder(
+      controller: _scrollController,
       itemCount: _songs.length,
       itemBuilder: (context, index) {
         final song = _songs.elementAt(index);
@@ -86,5 +99,12 @@ class _LatestSongsListState extends State<LatestSongsList> {
       await Future.delayed(Duration.zero);
     }
     _page++;
+  }
+
+  void onScrollEnd() {
+    final controller = _scrollController!;
+
+    if (controller.offset >= controller.position.maxScrollExtent &&
+        widget.paginate) {}
   }
 }
