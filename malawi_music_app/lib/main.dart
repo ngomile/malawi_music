@@ -41,6 +41,8 @@ class App extends StatelessWidget {
                 uri: args.uri,
               ),
             );
+          case 'latest':
+            return MaterialPageRoute(builder: (context) => const LatestPage());
           default:
             return MaterialPageRoute(builder: (context) => const HomePage());
         }
