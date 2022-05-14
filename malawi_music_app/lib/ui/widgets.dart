@@ -83,15 +83,15 @@ class PaginatedBuilder<T> extends StatefulWidget {
   final Stream<T>? stream;
 
   @override
-  State<PaginatedBuilder> createState() => _PaginatedBuilderState();
+  State<PaginatedBuilder> createState() => _PaginatedBuilderState<T>();
 }
 
-class _PaginatedBuilderState extends State<PaginatedBuilder> {
+class _PaginatedBuilderState<T> extends State<PaginatedBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      child: StreamBuilder(
+      child: StreamBuilder<T>(
         builder: widget.builder,
         stream: widget.stream,
       ),
