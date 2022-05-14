@@ -10,14 +10,24 @@ class SongTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _imageSection = Container(
-      height: 52.0,
-      width: 72.0,
-      margin: const EdgeInsets.only(right: 24.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+    final _imageSection = GestureDetector(
+      onTapUp: (_) => Navigator.pushNamed(
+        context,
+        '/play',
+        arguments: PlayArgs(
+          title: song.title,
+          uri: song.track,
+        ),
       ),
-      child: CachedImage(song.image),
+      child: Container(
+        height: 52.0,
+        width: 72.0,
+        margin: const EdgeInsets.only(right: 24.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: CachedImage(song.image),
+      ),
     );
 
     final _titleSection = Expanded(
