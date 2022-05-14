@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/args.dart';
+import 'package:malawi_music_app/colors.dart';
 import 'package:malawi_music_app/ui/pages/pages.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class App extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: kDarkBGColor,
       ),
       home: const HomePage(),
       onGenerateRoute: (settings) {
