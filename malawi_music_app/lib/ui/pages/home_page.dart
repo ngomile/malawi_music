@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:malawi_music_app/args.dart';
 import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/repository.dart';
+import 'package:malawi_music_app/styles.dart';
 import 'package:malawi_music_app/ui/ui.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,19 +53,12 @@ class LatestSongHeader extends StatelessWidget {
         children: const [
           Text(
             'Latest',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
+            style: kHeaderFontStyle,
           ),
           SizedBox(height: 8.0),
           Text(
             'Explore the latest music',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
-            ),
+            style: kHeaderSubFontStyle,
           ),
         ],
       ),
