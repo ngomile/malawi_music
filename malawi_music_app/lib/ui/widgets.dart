@@ -71,16 +71,16 @@ class SectionContainer extends StatelessWidget {
 /// method if the [paginate] field is set to true and shows a loader until it
 /// receives data more data
 class PaginatedBuilder<T> extends StatefulWidget {
-  const PaginatedBuilder({
-    required this.builder,
+  const PaginatedBuilder(
+    this.builder, {
     this.onEndScroll,
-    required this.stream,
+    this.stream,
     Key? key,
   }) : super(key: key);
 
   final Widget Function(BuildContext, AsyncSnapshot<T>) builder;
   final void Function()? onEndScroll;
-  final Stream<T> stream;
+  final Stream<T>? stream;
 
   @override
   State<PaginatedBuilder> createState() => _PaginatedBuilderState();
@@ -89,7 +89,13 @@ class PaginatedBuilder<T> extends StatefulWidget {
 class _PaginatedBuilderState extends State<PaginatedBuilder> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      child: StreamBuilder(
+        builder: widget.builder,
+        stream: widget.stream,
+      ),
+    );
   }
 
   void _onScrollEnd() {
