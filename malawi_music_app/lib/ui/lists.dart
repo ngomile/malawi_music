@@ -79,7 +79,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
   ///and feeds the data back into [_streamController] until
   ///done and increments the page count.
   void fetchSongs() async {
-    final songs = await SongRepository.getSongs(_page).toList();
+    final songs = await SongRepository.fetchSongs(_page).toList();
 
     for (final song in songs) {
       _streamController?.sink.add(song);

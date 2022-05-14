@@ -18,7 +18,7 @@ class SongRepository {
     connectTimeout: 20 * 1000,
   );
 
-  static Stream<Song> getSongs(int page) async* {
+  static Stream<Song> fetchSongs(int page) async* {
     final dio = Dio(_options);
 
     const kCardSelector = '.col-md-9 > .card-deck > .card';
@@ -63,7 +63,7 @@ class SongRepository {
     }
   }
 
-  static Future<Song> getSong(
+  static Future<Song> fetchSong(
     String title,
     String uri,
   ) async {

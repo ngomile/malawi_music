@@ -151,7 +151,7 @@ class _PlaySectionState extends State<PlaySection> {
   }
 
   Future<Song> fetchSong() async {
-    final song = await SongRepository.getSong(widget.title, widget.uri);
+    final song = await SongRepository.fetchSong(widget.title, widget.uri);
     return song;
   }
 }
