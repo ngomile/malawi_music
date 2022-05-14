@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/args.dart';
-import 'package:malawi_music_app/colors.dart';
+import 'package:malawi_music_app/ui/ui.dart';
 import 'package:malawi_music_app/pages/pages.dart';
 
 void main() {
