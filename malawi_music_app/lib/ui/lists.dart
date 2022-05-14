@@ -20,6 +20,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
   final List<Song> _songs = [];
   int _page = 1;
+  bool loading = false;
 
   @override
   void initState() {
@@ -99,12 +100,19 @@ class _LatestSongsListState extends State<LatestSongsList> {
       await Future.delayed(Duration.zero);
     }
     _page++;
+    loading = false;
+    setState(() {});
   }
 
   void onScrollEnd() {
     final controller = _scrollController!;
 
     if (controller.offset >= controller.position.maxScrollExtent &&
-        widget.paginate) {}
+        widget.paginate &&
+        !loading) {
+      loading = true;
+      fetchSongs();
+      setState(() {});
+    }
   }
 }
