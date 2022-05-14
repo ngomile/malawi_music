@@ -147,10 +147,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
                       margin: const EdgeInsets.only(right: 16.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
-                        child: CachedImage(
-                          song.image,
-                          aspectRatio: 4 / 3,
-                        ),
+                        child: CachedImage(song.image),
                       ),
                     ),
                     Expanded(

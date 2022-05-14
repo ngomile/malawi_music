@@ -194,14 +194,10 @@ class _TrackPlayerState extends State<TrackPlayer> {
 class CachedImage extends StatefulWidget {
   const CachedImage(
     this.url, {
-    this.fit = BoxFit.fill,
-    this.aspectRatio = 16 / 9,
     Key? key,
   }) : super(key: key);
 
   final String url;
-  final BoxFit fit;
-  final double aspectRatio;
 
   @override
   State<CachedImage> createState() => _CachedImageState();
@@ -217,42 +213,32 @@ class _CachedImageState extends State<CachedImage> {
     return CachedNetworkImage(
       imageUrl: widget.url,
       imageBuilder: (context, imageProvider) {
-        image = AspectRatio(
-          aspectRatio: widget.aspectRatio,
-          child: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              color: kImageBGColor,
-              image: DecorationImage(
-                image: imageProvider,
-                fit: widget.fit,
-              ),
+        image = Container(
+          constraints: const BoxConstraints.expand(),
+          decoration: BoxDecoration(
+            color: kImageBGColor,
+            image: DecorationImage(
+              image: imageProvider,
             ),
           ),
         );
         return image!;
       },
-      placeholder: (context, url) => AspectRatio(
-        aspectRatio: widget.aspectRatio,
-        child: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            color: kImageBGColor,
-          ),
+      placeholder: (context, url) => Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          color: kImageBGColor,
         ),
       ),
-      errorWidget: (context, url, error) => AspectRatio(
-        aspectRatio: widget.aspectRatio,
-        child: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            color: kImageBGColor,
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.error,
-              size: 32,
-            ),
+      errorWidget: (context, url, error) => Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          color: kImageBGColor,
+        ),
+        child: const Center(
+          child: Icon(
+            Icons.error,
+            size: 32,
           ),
         ),
       ),
