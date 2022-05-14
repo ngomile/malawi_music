@@ -40,14 +40,29 @@ class MainContent extends StatelessWidget {
 /// radius to it children and trailing and leading header widgets.
 class SectionContainer extends StatelessWidget {
   const SectionContainer({
-    Widget? leading,
-    Widget? trailing,
+    this.heading,
+    required this.child,
     Key? key,
   }) : super(key: key);
 
+  final Widget? heading;
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final _heading = heading ?? Container();
+
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          _heading,
+          child,
+        ],
+      ),
+    );
   }
 }
 

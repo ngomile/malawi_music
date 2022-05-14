@@ -29,13 +29,9 @@ class LatestSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: const [
-        LatestSongHeader(),
-        Expanded(child: LatestSongsList()),
-      ],
+    return const SectionContainer(
+      heading: LatestSongHeader(),
+      child: LatestSongsList(),
     );
   }
 }
