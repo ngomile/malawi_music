@@ -97,14 +97,6 @@ class _PaginatedBuilderState<T> extends State<PaginatedBuilder<T>> {
       ),
     );
   }
-
-  void _onScrollEnd() {
-    void Function()? handler = widget.onScrollEnd;
-
-    if (handler == null) return;
-
-    handler();
-  }
 }
 
 class TrackPlayer extends StatefulWidget {

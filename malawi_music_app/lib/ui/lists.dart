@@ -62,9 +62,19 @@ class _LatestSongsListState extends State<LatestSongsList> {
         ),
       ),
       margin: const EdgeInsets.only(top: 12.0),
-      child: PaginatedBuilder<Song>(
-        builder,
-        stream: _streamController?.stream,
+      child: Column(
+        children: [
+          Expanded(
+            child: PaginatedBuilder<Song>(
+              builder,
+              stream: _streamController?.stream,
+            ),
+          ),
+          if (loading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
       ),
     );
   }
