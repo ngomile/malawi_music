@@ -16,15 +16,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MainContent(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: const [
-          LatestSongHeader(),
-          Expanded(child: LatestSongsList()),
-        ],
-      ),
+    return const MainContent(
+      child: LatestSection(),
+    );
+  }
+}
+
+class LatestSection extends StatelessWidget {
+  const LatestSection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: const [
+        LatestSongHeader(),
+        Expanded(child: LatestSongsList()),
+      ],
     );
   }
 }
