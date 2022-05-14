@@ -3,3 +3,4 @@ export './headers.dart';
 export './lists.dart';
 export './colors.dart';
 export './styles.dart';
+export './model_views.dart';
