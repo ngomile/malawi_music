@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:malawi_music_app/colors.dart';
+import 'package:malawi_music_app/ui/colors.dart';
 
 /// [MainContent] is a helper widget that places its children within commonly
 /// used widgets like [SafeArea] and provides the default text color to child
