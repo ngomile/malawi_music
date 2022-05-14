@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:malawi_music_app/ui/styles.dart';
 import 'package:malawi_music_app/ui/ui.dart';
 
 class LatestSongHeader extends StatelessWidget {
