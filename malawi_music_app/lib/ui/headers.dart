@@ -36,7 +36,10 @@ class LatestSongHeader extends StatelessWidget {
             vertical: 16.0,
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(
+              context,
+              '/latest',
+            ),
             icon: const Icon(
               Icons.chevron_right_rounded,
               color: kPrimaryLightColor,
