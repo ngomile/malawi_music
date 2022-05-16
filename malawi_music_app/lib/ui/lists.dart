@@ -15,7 +15,7 @@ class LatestSongsList extends StatefulWidget {
 }
 
 class _LatestSongsListState extends State<LatestSongsList> {
-  StreamController<Song>? _streamController;
+  StreamController<List<Song>>? _streamController;
   ScrollController? _scrollController;
 
   final List<Song> _songs = [];
@@ -27,8 +27,10 @@ class _LatestSongsListState extends State<LatestSongsList> {
     super.initState();
     _streamController ??= StreamController.broadcast();
 
-    _streamController?.stream
-        .listen((data) => setState(() => _songs.add(data)));
+    _streamController?.stream.listen((data) {
+      _songs.addAll(data);
+      setState(() => loading = false);
+    });
 
     _scrollController = ScrollController()..addListener(onScrollEnd);
 
@@ -65,7 +67,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
       child: Column(
         children: [
           Expanded(
-            child: PaginatedBuilder<Song>(
+            child: PaginatedBuilder<List<Song>>(
               builder,
               stream: _streamController?.stream,
             ),
@@ -81,7 +83,7 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
   ///[builder] gets called after a successful stream operation, returning the
   ///widget that displays the result from the stream
-  Widget builder(BuildContext context, AsyncSnapshot<Song?> snapshot) {
+  Widget builder(BuildContext context, AsyncSnapshot<List<Song>?> snapshot) {
     if (!snapshot.hasData) {
       return const Center(
         child: CircularProgressIndicator(),
@@ -104,14 +106,12 @@ class _LatestSongsListState extends State<LatestSongsList> {
   ///done and increments the page count.
   void fetchSongs() async {
     final songs = await SongRepository.fetchSongs(_page).toList();
-
-    for (final song in songs) {
-      _streamController?.sink.add(song);
-      await Future.delayed(Duration.zero);
-    }
+    _streamController?.sink.add(songs);
+    await Future.delayed(Duration.zero);
     _page++;
-    loading = false;
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
   }
 
   void onScrollEnd() {
@@ -120,9 +120,10 @@ class _LatestSongsListState extends State<LatestSongsList> {
     if (controller.offset >= controller.position.maxScrollExtent &&
         widget.paginate &&
         !loading) {
-      loading = true;
       fetchSongs();
-      setState(() {});
+      setState(() {
+        loading = true;
+      });
     }
   }
 }
