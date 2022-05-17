@@ -54,10 +54,23 @@ class _LatestSongsState extends State<LatestSongs> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _streamController?.stream,
-      builder: builder,
-    );
+    return Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 8.0,
+        ),
+        decoration: const BoxDecoration(
+          color: Color(0xFF0F0F0F),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
+          ),
+        ),
+        margin: const EdgeInsets.only(top: 12.0),
+        child: StreamBuilder(
+          stream: _streamController?.stream,
+          builder: builder,
+        ));
   }
 
   Widget builder(BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
@@ -72,31 +85,17 @@ class _LatestSongsState extends State<LatestSongs> {
     if (_loading) _widgets.add(const Spinner());
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 8.0,
-      ),
-      decoration: const BoxDecoration(
-        color: Color(0xFF0F0F0F),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-        ),
-      ),
-      margin: const EdgeInsets.only(top: 12.0),
-      child: Container(
-        constraints: const BoxConstraints.expand(),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: _widgets.length,
-                itemBuilder: (context, index) => _widgets[index],
-              ),
+      constraints: const BoxConstraints.expand(),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: _widgets.length,
+              itemBuilder: (context, index) => _widgets[index],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
