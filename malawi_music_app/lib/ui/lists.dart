@@ -66,9 +66,7 @@ class _LatestSongsState extends State<LatestSongs> {
     if (!snapshot.hasData) _widgets.add(const Spinner());
 
     if (_songs.isNotEmpty) {
-      _widgets.addAll(
-        _songs.map<SongTile>((e) => SongTile(e)),
-      );
+      _widgets.addAll(_songs.map<SongTile>((e) => SongTile(e)));
     }
 
     if (_loading) _widgets.add(const Spinner());
