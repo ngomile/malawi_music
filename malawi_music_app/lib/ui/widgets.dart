@@ -8,8 +8,10 @@ class Spinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Container(
+      child: const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
