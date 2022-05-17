@@ -26,7 +26,7 @@ class LatestSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SectionContainer(
       heading: LatestSongHeader(),
-      child: LatestSongsList(),
+      child: LatestSongs(),
     );
   }
 }

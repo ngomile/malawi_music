@@ -5,36 +5,39 @@ import 'package:malawi_music_app/models.dart';
 import 'package:malawi_music_app/repository.dart';
 import 'package:malawi_music_app/ui/ui.dart';
 
-class LatestSongsList extends StatefulWidget {
-  const LatestSongsList({this.paginate = false, Key? key}) : super(key: key);
+class LatestSongs extends StatefulWidget {
+  const LatestSongs({
+    this.paginate = false,
+    Key? key,
+  }) : super(key: key);
 
   final bool paginate;
 
   @override
-  State<LatestSongsList> createState() => _LatestSongsListState();
+  State<LatestSongs> createState() => _LatestSongsState();
 }
 
-class _LatestSongsListState extends State<LatestSongsList> {
+class _LatestSongsState extends State<LatestSongs> {
   StreamController<List<Song>>? _streamController;
   ScrollController? _scrollController;
 
   final List<Song> _songs = [];
   int _page = 1;
-  bool loading = false;
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
-    _streamController ??= StreamController.broadcast();
 
-    _streamController?.stream.listen((data) {
-      _songs.addAll(data);
-      setState(() => loading = false);
+    _streamController ??= StreamController.broadcast();
+    _streamController?.stream.listen((songs) {
+      _songs.addAll(songs);
+      setState(() => _loading = false);
     });
 
     _scrollController = ScrollController()..addListener(onScrollEnd);
 
-    fetchSongs();
+    getSongs();
   }
 
   @override
@@ -51,6 +54,25 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _streamController?.stream,
+      builder: builder,
+    );
+  }
+
+  Widget builder(BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
+    final List<Widget> _widgets = [];
+
+    if (!snapshot.hasData) _widgets.add(const Spinner());
+
+    if (_songs.isNotEmpty) {
+      _widgets.addAll(
+        _songs.map<SongTile>((e) => SongTile(e)),
+      );
+    }
+
+    if (_loading) _widgets.add(const Spinner());
+
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 16.0,
@@ -64,54 +86,35 @@ class _LatestSongsListState extends State<LatestSongsList> {
         ),
       ),
       margin: const EdgeInsets.only(top: 12.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: PaginatedBuilder<List<Song>>(
-              builder,
-              stream: _streamController?.stream,
+      child: Container(
+        constraints: const BoxConstraints.expand(),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _widgets.length,
+                itemBuilder: (context, index) => _widgets[index],
+              ),
             ),
-          ),
-          if (loading)
-            const Center(
-              child: CircularProgressIndicator(),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  ///[builder] gets called after a successful stream operation, returning the
-  ///widget that displays the result from the stream
-  Widget builder(BuildContext context, AsyncSnapshot<List<Song>?> snapshot) {
-    if (!snapshot.hasData) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+  void getSongs() async {
+    try {
+      final songs = await SongRepository.fetchSongs(_page).toList();
+      _streamController?.sink.add(songs);
+      await Future.delayed(Duration.zero);
+      setState(() {
+        _page++;
+        _loading = false;
+      });
+    } catch (e) {
+      _streamController?.addError(e);
     }
-
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _songs.length,
-      itemBuilder: (context, index) {
-        final song = _songs.elementAt(index);
-
-        return SongTile(song);
-      },
-    );
-  }
-
-  ///[fetchSongs] handles retrieval of songs from the page
-  ///and feeds the data back into [_streamController] until
-  ///done and increments the page count.
-  void fetchSongs() async {
-    final songs = await SongRepository.fetchSongs(_page).toList();
-    _streamController?.sink.add(songs);
-    await Future.delayed(Duration.zero);
-    _page++;
-    setState(() {
-      loading = false;
-    });
   }
 
   void onScrollEnd() {
@@ -119,10 +122,10 @@ class _LatestSongsListState extends State<LatestSongsList> {
 
     if (controller.offset >= controller.position.maxScrollExtent &&
         widget.paginate &&
-        !loading) {
-      fetchSongs();
+        !_loading) {
+      getSongs();
       setState(() {
-        loading = true;
+        _loading = true;
       });
     }
   }

@@ -3,6 +3,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:malawi_music_app/ui/colors.dart';
 
+class Spinner extends StatelessWidget {
+  const Spinner({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
 /// [MainContent] is a helper widget that places its children within commonly
 /// used widgets like [SafeArea] and provides the default text color to child
 /// widgets
@@ -61,39 +72,6 @@ class SectionContainer extends StatelessWidget {
           _heading,
           Expanded(child: child),
         ],
-      ),
-    );
-  }
-}
-
-/// [PaginatedBuilder] loads additional content on demand when the user reaches
-/// the scroll end of the content box, the loader makes a call to the [onScrollEnd]
-/// method if the [paginate] field is set to true and shows a loader until it
-/// receives data more data
-class PaginatedBuilder<T> extends StatefulWidget {
-  const PaginatedBuilder(
-    this.builder, {
-    this.onScrollEnd,
-    this.stream,
-    Key? key,
-  }) : super(key: key);
-
-  final Widget Function(BuildContext, AsyncSnapshot<T>) builder;
-  final void Function()? onScrollEnd;
-  final Stream<T>? stream;
-
-  @override
-  State<PaginatedBuilder> createState() => _PaginatedBuilderState<T>();
-}
-
-class _PaginatedBuilderState<T> extends State<PaginatedBuilder<T>> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      child: StreamBuilder<T>(
-        builder: widget.builder,
-        stream: widget.stream,
       ),
     );
   }
