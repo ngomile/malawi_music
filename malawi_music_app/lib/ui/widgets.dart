@@ -93,6 +93,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
   Duration _position = const Duration();
 
   bool _isPlaying = false;
+  bool _loading = true;
 
   final List<IconData> _icons = [
     Icons.play_circle_filled,
@@ -111,7 +112,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
           _position = duration;
         }));
 
-    _player.setSourceUrl(widget.uri);
+    initSource(widget.uri);
   }
 
   @override
@@ -152,19 +153,21 @@ class _TrackPlayerState extends State<TrackPlayer> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              color: const Color(0xFFF8F8F8),
-              onPressed: _playHandler,
-              icon: !_isPlaying
-                  ? Icon(
-                      _icons[0],
-                      size: 50.0,
-                    )
-                  : Icon(
-                      _icons[1],
-                      size: 50.0,
-                    ),
-            ),
+            _loading
+                ? const CircularProgressIndicator()
+                : IconButton(
+                    color: const Color(0xFFF8F8F8),
+                    onPressed: _playHandler,
+                    icon: !_isPlaying
+                        ? Icon(
+                            _icons[0],
+                            size: 50.0,
+                          )
+                        : Icon(
+                            _icons[1],
+                            size: 50.0,
+                          ),
+                  ),
           ],
         ),
       ],
@@ -188,6 +191,15 @@ class _TrackPlayerState extends State<TrackPlayer> {
     List<String> splitParts = parsedTime.split('.')[0].split(':');
     parsedTime = '${splitParts[1]}:${splitParts[2]}';
     return parsedTime;
+  }
+
+  Future<void> initSource(String url) async {
+    await _player.setSourceUrl(url);
+    await _player.play(UrlSource(url));
+    setState(() {
+      _isPlaying = true;
+      _loading = false;
+    });
   }
 }
 
