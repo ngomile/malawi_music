@@ -1,5 +1,5 @@
 name: malawi_music_app
-description: A new Flutter project.
+description: Music Player for Malawi Music.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,8 +31,8 @@ dependencies:
     sdk: flutter
   html: ^0.15.0
   dio: ^4.0.6
-  cached_network_image: ^3.2.0
-  audioplayers: ^0.20.1
+  cached_network_image: ^3.2.2
+  audioplayers: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

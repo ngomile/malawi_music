@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 
 import 'package:malawi_music_app/models.dart';
 import './constants.dart';
-import './models.dart';
 
 ///[SongRepository] handles extraction of data from
 ///documents to product [Song] models

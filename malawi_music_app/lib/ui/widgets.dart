@@ -8,10 +8,8 @@ class Spinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Center(
-        child: CircularProgressIndicator(),
-      ),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }
@@ -109,11 +107,11 @@ class _TrackPlayerState extends State<TrackPlayer> {
           _duration = duration;
         }));
 
-    _player.onAudioPositionChanged.listen((duration) => setState(() {
+    _player.onPositionChanged.listen((duration) => setState(() {
           _position = duration;
         }));
 
-    _player.setUrl(widget.uri);
+    _player.setSourceUrl(widget.uri);
   }
 
   @override
@@ -175,7 +173,7 @@ class _TrackPlayerState extends State<TrackPlayer> {
 
   void _playHandler() {
     _isPlaying = !_isPlaying;
-    _isPlaying ? _player.pause() : _player.play(widget.uri);
+    _isPlaying ? _player.pause() : _player.play(UrlSource(widget.uri));
     setState(() {});
   }
 
