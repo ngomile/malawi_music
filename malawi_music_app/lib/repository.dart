@@ -17,7 +17,8 @@ class SongRepository {
     connectTimeout: 20 * 1000,
   );
 
-  static Stream<Song> fetchSongs(int page) async* {
+  static Stream<List<Song>> fetchSongs(int page) async* {
+    final songs = <Song>[];
     final dio = Dio(_options);
 
     const kCardSelector = '.col-md-9 > .card-deck > .card';
@@ -50,13 +51,15 @@ class SongRepository {
                 '';
         final String? trackURL = songTitles.last.attributes['href'];
 
-        yield Song(
+        songs.add(Song(
           artist: artist,
           title: title,
           image: '$kBaseURL$image',
           track: trackURL ?? '',
-        );
+        ));
       }
+
+      yield songs;
     } finally {
       dio.close();
     }

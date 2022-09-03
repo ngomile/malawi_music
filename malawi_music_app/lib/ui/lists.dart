@@ -102,7 +102,7 @@ class _LatestSongsState extends State<LatestSongs> {
 
   void getSongs() async {
     try {
-      final songs = await SongRepository.fetchSongs(_page).toList();
+      final songs = await SongRepository.fetchSongs(_page).single;
       _streamController?.sink.add(songs);
       await Future.delayed(Duration.zero);
       setState(() {
